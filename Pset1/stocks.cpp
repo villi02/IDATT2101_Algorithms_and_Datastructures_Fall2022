@@ -1,6 +1,11 @@
+#include <algorithm>
+#include <time.h>
+#include <chrono>
 #include <iostream>
 #include <random>
+#include <vector>
 using namespace std;
+using namespace std::chrono;
 
 int maxProfit(int changes[], int n, int *buy_day, int *sell_day)
 {
@@ -49,18 +54,30 @@ int main(void)
     int *changes = new int[size];
     randomArray(changes, size);
 
-    // int prices[9] = {-1, 3, -9, 2, 2, -1, 2, -1, -5};
     int buy_day, sell_day;
+
+    // Display whats in the array...
+    // for (int i = 0; i < size; ++i)
+    //{
+    // std::cout << "Item In Element " << i << " of the array = : " << changes[i] << std::endl;
+    //}
+
+    // Get starting timepoint
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
+    // Call the function
     int max_profit = maxProfit(changes, size, &buy_day, &sell_day);
+
+    // Get ending timepoint
+    // end = clock();
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    long duration = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
+    // auto diff = end - start;
 
     cout << "\nThe day to buy is day nr " << buy_day << " and the day to sell is day nr "
          << sell_day << " and max profit pr share is " << max_profit;
 
-    cout << "\nAll elements:";
-    // Display whats in the array...
-    for (int i = 0; i < size; ++i)
-    {
-        std::cout << "Item In Element " << i << " of the array = : " << changes[i] << std::endl;
-    }
+    std::cout << "\nDuration of function = " << duration << "[µs]" << std::endl;
+
     return 0;
 }
