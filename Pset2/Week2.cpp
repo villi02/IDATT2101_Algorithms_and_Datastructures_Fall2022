@@ -13,11 +13,26 @@ int calc_pow(int base, int power)
         return base * calc_pow(base, (power -1));
 }
 
+int calc_pow2(int base, int power)
+{
+    if (power == 0)
+        return 1;
+    
+    else if (power == 1)
+        return base;
+
+    else if (power % 2 == 0)
+        return calc_pow2(base*base, power/2);
+    
+    else 
+        return base * calc_pow2(base * base, (power - 1)/2);
+}
+
 int main(void) 
 {
 
     // Test data
-    std::cout << "\n (2.1-1) " << "2" << " raised to the " << "power of " << "12" << " is " << calc_pow(2, 12) << std::endl; 
+    std::cout << "\n (2.1-1) " << "2" << " raised to the " << "power of " << "12" << " is " << calc_pow2(2, 12) << std::endl; 
     std::cout << "\n (2.1-1) " << "3" << " raised to the " << "power of " << "14" << " is " << calc_pow(3, 14) << std::endl; 
 
     // Create a user input 
