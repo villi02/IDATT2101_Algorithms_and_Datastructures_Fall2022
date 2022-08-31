@@ -1,0 +1,70 @@
+ 
+ calc_pow analysis:
+
+ The algorithm is linear, as it iterates through every single one of the exponents once
+ Thus, T(n) ∈ θ(n)
+
+ calc_pow2 analysis:
+The algorithm iterates through the exponents by dividing them by two every time.
+T(n) = aT(n/b) + cn^k
+
+for this algorithm it comes out to T(n) = T(n/2)
+where the time complexity is T(n) ∈ θ(n^k * log(n)) -> T(n) ∈ θ(log(n)), as k = 0
+ 
+The time measurements seem to confirm this, with calc_pow doubling in duration with a doubling of dataset, and calc_pow2 increasing at a lower rate, closer to log(n)
+ 
+ Time measurements:
+
+ (2.1-1)  base: 1.001 power: 200 run 100 000 times
+Duration of function: 2434144[µs]
+
+ (2.2-3)  base: 1.001 power: 200 run 100 000 times
+Duration of function: 383[µs]
+
+ (Built inn function)  base: 1.001 power: 200 run 100 000 times
+Duration of function: 147[µs]
+
+ (2.1-1)  base: 1.001 power: 400 run 100 000 times
+Duration of function: 4846982[µs]
+
+ (2.2-3)  base: 1.001 power: 400 run 100 000 times
+Duration of function: 434[µs]
+
+ (Built inn function)  base: 1.001 power: 400 run 100 000 times
+Duration of function: 143[µs]
+
+ (2.1-1)  base: 1.001 power: 800 run 100 000 times
+Duration of function: 9699433[µs]
+
+ (2.2-3)  base: 1.001 power: 800 run 100 000 times
+Duration of function: 487[µs]
+
+ (Built inn function)  base: 1.001 power: 800 run 100 000 times
+Duration of function: 142[µs]
+
+ (2.1-1)  base: 1.001 power: 1600 run 100 000 times
+Duration of function: 19400197[µs]
+
+ (2.2-3)  base: 1.001 power: 1600 run 100 000 times
+Duration of function: 539[µs]
+
+ (Built inn function)  base: 1.001 power: 1600 run 100 000 times
+Duration of function: 144[µs]
+
+ (2.1-1)  base: 1.001 power: 3200 run 100 000 times
+Duration of function: 39533289[µs]
+
+ (2.2-3)  base: 1.001 power: 3200 run 100 000 times
+Duration of function: 623[µs]
+
+ (Built inn function)  base: 1.001 power: 3200 run 100 000 times
+Duration of function: 152[µs]
+
+ (2.1-1)  base: 1.001 power: 6337 run 100 000 times
+Duration of function: 78928020[µs]
+
+ (2.2-3)  base: 1.001 power: 6337 run 100 000 times
+Duration of function: 708[µs]
+
+ (Built inn function)  base: 1.001 power: 6337 run 100 000 times
+Duration of function: 151[µs]
