@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <random>
+#include <numeric>
 
 /*
     Single pivot quicksort
@@ -131,12 +132,57 @@ void DualPivotQuickSort(int *arr, int low, int high)
 // Method for getting random array wtih n elements
 void randomArray(int change_array[], int n)
 {
-    std::random_device rd;                          // obtain a random number from hardware
-    std::mt19937 gen(rd());                         // seed the generator
-    std::uniform_int_distribution<> distr(-10, 10); // define the range
+    std::random_device rd;                        // obtain a random number from hardware
+    std::mt19937 gen(rd());                       // seed the generator
+    std::uniform_int_distribution<> distr(1, 20); // define the range
 
     for (int i = 0; i < n; ++i)
         change_array[i] = distr(gen);
+}
+
+// Method for getting random array wtih n elements
+void randomArrayDuplicates(int change_array[], int n)
+{
+    std::random_device rd;                        // obtain a random number from hardware
+    std::mt19937 gen(rd());                       // seed the generator
+    std::uniform_int_distribution<> distr(1, 20); // define the range
+
+    for (int i = 0; i < n; ++i)
+        if (i % 2 == 0)
+            change_array[i] = distr(gen);
+        else
+            change_array[i] = 4;
+}
+
+void sortedArray(int change_array[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        change_array[i] = i;
+    }
+}
+
+// Finds the combined value of the elements inside an array
+int checksum(int *arr, int n)
+{
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        sum += arr[i];
+    }
+    return sum;
+}
+
+bool correctOrder(int *arr, int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        if (arr[i + 1] < arr[i])
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 int main(void)
@@ -150,10 +196,21 @@ int main(void)
         std::cout << testArray1[i] << ", ";
     }
 
-    quicksort1(testArray1, 0, 9);
-    DualPivotQuickSort(testArray2, 0, 9);
+    std::cout << "\n size: " << *(&testArray1 + 1) - testArray1;
+
+    int checksum1 = checksum(testArray1, (*(&testArray1 + 1) - testArray1));
+    int checksum2 = checksum(testArray2, (*(&testArray2 + 1) - testArray2));
+    bool firstOrder1 = correctOrder(testArray1, (*(&testArray1 + 1) - testArray1));
+    bool firstOrder2 = correctOrder(testArray2, (*(&testArray2 + 1) - testArray2));
+
+    quicksort1(testArray1, 0, (*(&testArray1 + 1) - testArray1) - 1);
+    DualPivotQuickSort(testArray2, 0, (*(&testArray2 + 1) - testArray2) - 1);
 
     std::cout
+        << "\n checksum before: " << checksum1
+        << "\n checksum after: " << checksum(testArray1, (*(&testArray1 + 1) - testArray1))
+        << "\n correct order before? " << firstOrder1
+        << "\n correct order after? " << correctOrder(testArray1, (*(&testArray1 + 1) - testArray1))
         << "\n Test array after single pivot quicksort:\n";
 
     for (int i = 0; i < 10; i++)
@@ -162,45 +219,190 @@ int main(void)
     }
 
     std::cout
+        << "\n checksum before: " << checksum2
+        << "\n checksum after: " << checksum(testArray2, (*(&testArray2 + 1) - testArray2))
+        << "\n correct order before? " << firstOrder2
+        << "\n correct order after? " << correctOrder(testArray2, (*(&testArray2 + 1) - testArray2))
         << "\n Test array after dual pivot quicksort:\n";
 
     for (int i = 0; i < 10; i++)
     {
         std::cout << testArray2[i] << ", ";
     }
+    std::cout << "\n";
 
     // Test loops
     int sizes[] = {pow(10, 5), pow(10, 6), pow(10, 7), pow(10, 8)};
+    /*
+    for (int i = 0; i < 4; i++)
+    {
+        // Random data
+        // Test data
+        int *randArray1 = new int[sizes[i]];
+        randomArray(randArray1, sizes[i]);
+        int *randArray2 = new int[sizes[i]];
+        randomArray(randArray2, sizes[i]);
+        int checksum1 = checksum(randArray1, sizes[i]);
+        int checksum2 = checksum(randArray2, sizes[i]);
+        bool rightOrder1 = correctOrder(randArray1, sizes[i]);
+        bool rightOrder2 = correctOrder(randArray2, sizes[i]);
 
-    // Get starting timepoint
-    std::chrono::steady_clock::time_point begin221 = std::chrono::steady_clock::now();
+        // Get starting timepoint
+        std::chrono::steady_clock::time_point begin221 = std::chrono::steady_clock::now();
 
-    quicksort1(, sizes[i]);
+        quicksort1(randArray1, 0, sizes[i] - 1);
 
-    // Get ending timepoint
-    std::chrono::steady_clock::time_point end221 = std::chrono::steady_clock::now();
-    long duration221 = std::chrono::duration_cast<std::chrono::microseconds>(end221 - begin221).count();
+        // Get ending timepoint
+        std::chrono::steady_clock::time_point end221 = std::chrono::steady_clock::now();
+        long duration221 = std::chrono::duration_cast<std::chrono::microseconds>(end221 - begin221).count();
 
-    std::cout << "\n Single Pivot "
-              << " Array with "
-              << powers[i] << "  random elements"
-              << "\nDuration of function: " << duration221 << "[µs]"
-              << std::endl;
+        std::cout << "\n Single Pivot "
+                  << " Array with "
+                  << sizes[i] << "  random elements\n"
+                  << "\nsum before: " << checksum1
+                  << "\nsum after: " << checksum(randArray1, sizes[i])
+                  << "\ncorrect order before? " << rightOrder1
+                  << "\ncorrect order after? " << correctOrder(randArray1, sizes[i])
+                  << "\n\nDuration of function: " << duration221 << "[µs]"
+                  << std::endl;
 
-    // Get starting timepoint
-    std::chrono::steady_clock::time_point begin233 = std::chrono::steady_clock::now();
+        // Get starting timepoint
+        std::chrono::steady_clock::time_point begin233 = std::chrono::steady_clock::now();
 
-    calc_pow2(base_normal, powers[i]);
+        DualPivotQuickSort(randArray2, 0, sizes[i] - 1);
 
-    // Get ending timepoint
-    std::chrono::steady_clock::time_point end233 = std::chrono::steady_clock::now();
-    long duration233 = std::chrono::duration_cast<std::chrono::microseconds>(end233 - begin233).count();
+        // Get ending timepoint
+        std::chrono::steady_clock::time_point end233 = std::chrono::steady_clock::now();
+        long duration233 = std::chrono::duration_cast<std::chrono::microseconds>(end233 - begin233).count();
 
-    std::cout << "\n Dual Pivot "
-              << " Array with "
-              << powers[i] << "  random elements"
-              << "\nDuration of function: " << duration221 << "[µs]"
-              << std::endl;
+        std::cout << "\n Dual Pivot "
+                  << " Array with "
+                  << sizes[i] << "  random elements\n"
+                  << "\nsum before: " << checksum2
+                  << "\nsum after: " << checksum(randArray2, sizes[i])
+                  << "\ncorrect order before? " << rightOrder2
+                  << "\ncorrect order after? " << correctOrder(randArray2, sizes[i])
+                  << "\n\nDuration of function: " << duration233 << "[µs]"
+                  << std::endl;
+    }
+
+    /*
+
+        // Random data with duplicates
+        // Test data
+        int *randArray1 = new int[sizes[i]];
+        randomArrayDuplicates(randArray1, sizes[i]);
+        int *randArray2 = new int[sizes[i]];
+        randomArrayDuplicates(randArray2, sizes[i]);
+        int checksum1 = checksum(randArray1, sizes[i]);
+        int checksum2 = checksum(randArray2, sizes[i]);
+        bool rightOrder1 = correctOrder(randArray1, sizes[i]);
+        bool rightOrder2 = correctOrder(randArray2, sizes[i]);
+
+        std::cout << "\n first elements of array with duplicates: \n";
+        for (int k = 0; k < 10; k++)
+        {
+            std::cout << randArray2[k] << ", ";
+        }
+
+        // Get starting timepoint
+        std::chrono::steady_clock::time_point begin221 = std::chrono::steady_clock::now();
+
+        quicksort1(randArray1, 0, sizes[i] - 1);
+
+        // Get ending timepoint
+        std::chrono::steady_clock::time_point end221 = std::chrono::steady_clock::now();
+        long duration221 = std::chrono::duration_cast<std::chrono::microseconds>(end221 - begin221).count();
+
+        std::cout << "\nSingle Pivot "
+                  << " Array with "
+                  << sizes[i] << "  random elements with duplicates\n"
+                  << "\nsum before: " << checksum1
+                  << "\nsum after: " << checksum(randArray1, sizes[i])
+                  << "\ncorrect order before? " << rightOrder1
+                  << "\ncorrect order after? " << correctOrder(randArray1, sizes[i])
+                  << "\n\nDuration of function: " << duration221 << "[µs]"
+                  << std::endl;
+
+        // Get starting timepoint
+        std::chrono::steady_clock::time_point begin233 = std::chrono::steady_clock::now();
+
+        DualPivotQuickSort(randArray2, 0, sizes[i] - 1);
+
+        // Get ending timepoint
+        std::chrono::steady_clock::time_point end233 = std::chrono::steady_clock::now();
+        long duration233 = std::chrono::duration_cast<std::chrono::microseconds>(end233 - begin233).count();
+
+        std::cout << "\nDual Pivot "
+                  << " Array with "
+                  << sizes[i] << "  random elements with duplicates\n"
+                  << "\nsum before: " << checksum2
+                  << "\nsum after: " << checksum(randArray2, sizes[i])
+                  << "\ncorrect order before? " << rightOrder2
+                  << "\ncorrect order after? " << correctOrder(randArray2, sizes[i])
+                  << "\n\nDuration of function: " << duration233 << "[µs]"
+                  << std::endl;
+    }
+    */
+
+    /*
+
+        // Sorted data
+        // Test data
+        int *randArray1 = new int[sizes[i]];
+        sortedArray(randArray1, sizes[i]);
+        int *randArray2 = new int[sizes[i]];
+        sortedArray(randArray2, sizes[i]);
+        int checksum1 = checksum(randArray1, sizes[i]);
+        int checksum2 = checksum(randArray2, sizes[i]);
+        bool rightOrder1 = correctOrder(randArray1, sizes[i]);
+        bool rightOrder2 = correctOrder(randArray2, sizes[i]);
+
+        std::cout << "\n first elements of sorted array: \n";
+        for (int k = 0; k < 10; k++)
+        {
+            std::cout << randArray2[k] << ", ";
+        }
+
+        // Get starting timepoint
+        std::chrono::steady_clock::time_point begin221 = std::chrono::steady_clock::now();
+
+        quicksort1(randArray1, 0, sizes[i] - 1);
+
+        // Get ending timepoint
+        std::chrono::steady_clock::time_point end221 = std::chrono::steady_clock::now();
+        long duration221 = std::chrono::duration_cast<std::chrono::microseconds>(end221 - begin221).count();
+
+        std::cout << "\nSingle Pivot "
+                  << " Array with "
+                  << sizes[i] << "  random elements with duplicates\n"
+                  << "\nsum before: " << checksum1
+                  << "\nsum after: " << checksum(randArray1, sizes[i])
+                  << "\ncorrect order before? " << rightOrder1
+                  << "\ncorrect order after? " << correctOrder(randArray1, sizes[i])
+                  << "\n\nDuration of function: " << duration221 << "[µs]"
+                  << std::endl;
+
+        // Get starting timepoint
+        std::chrono::steady_clock::time_point begin233 = std::chrono::steady_clock::now();
+
+        DualPivotQuickSort(randArray2, 0, sizes[i] - 1);
+
+        // Get ending timepoint
+        std::chrono::steady_clock::time_point end233 = std::chrono::steady_clock::now();
+        long duration233 = std::chrono::duration_cast<std::chrono::microseconds>(end233 - begin233).count();
+
+        std::cout << "\nDual Pivot "
+                  << " Array with "
+                  << sizes[i] << "  random elements with duplicates\n"
+                  << "\nsum before: " << checksum2
+                  << "\nsum after: " << checksum(randArray2, sizes[i])
+                  << "\ncorrect order before? " << rightOrder2
+                  << "\ncorrect order after? " << correctOrder(randArray2, sizes[i])
+                  << "\n\nDuration of function: " << duration233 << "[µs]"
+                  << std::endl;
+    }
+    */
 
     return 0;
 }

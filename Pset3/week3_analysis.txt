@@ -1,0 +1,246 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Time of functions (random elements):
+
+ Single Pivot  Array with 100000  random elements
+
+sum before: 1050240
+sum after: 1050240
+correct order before? 0
+correct order after? 1
+
+Duration of function: 6846[µs]
+
+ Dual Pivot  Array with 100000  random elements
+
+sum before: 1050061
+sum after: 1050061
+correct order before? 0
+correct order after? 1
+
+Duration of function: 8429[µs]
+
+ Single Pivot  Array with 1000000  random elements
+
+sum before: 10497434
+sum after: 10497434
+correct order before? 0
+correct order after? 1
+
+Duration of function: 73410[µs]
+
+ Dual Pivot  Array with 1000000  random elements
+
+sum before: 10505836
+sum after: 10505836
+correct order before? 0
+correct order after? 1
+
+Duration of function: 90488[µs]
+
+ Single Pivot  Array with 10000000  random elements
+
+sum before: 104990677
+sum after: 104990677
+correct order before? 0
+correct order after? 1
+
+Duration of function: 826896[µs]
+
+ Dual Pivot  Array with 10000000  random elements
+
+sum before: 105022516
+sum after: 105022516
+correct order before? 0
+correct order after? 1
+
+Duration of function: 1210117[µs]
+
+ Single Pivot  Array with 100000000  random elements
+
+sum before: 1050254176
+sum after: 1050254176
+correct order before? 0
+correct order after? 1
+
+Duration of function: 8863686[µs]
+
+ Dual Pivot  Array with 100000000  random elements
+
+sum before: 1049977479
+sum after: 1049977479
+correct order before? 0
+correct order after? 1
+
+Duration of function: 11440236[µs]
+
+Dual pivot is a fair bit slower than single pivot quicksort for random dataset
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Time of functions (random elements with duplicates):
+
+ first elements of array with duplicates: 
+8, 4, 8, 4, 15, 4, 13, 4, 12, 4, 
+Single Pivot  Array with 100000  random elements with duplicates
+
+sum before: 726459
+sum after: 726459
+correct order before? 0
+correct order after? 1
+
+Duration of function: 5804[µs]
+
+Dual Pivot  Array with 100000  random elements with duplicates
+
+sum before: 724863
+sum after: 724863
+correct order before? 0
+correct order after? 1
+
+Duration of function: 7262[µs]
+
+ first elements of array with duplicates: 
+8, 4, 3, 4, 18, 4, 12, 4, 3, 4, 
+Single Pivot  Array with 1000000  random elements with duplicates
+
+sum before: 7246050
+sum after: 7246050
+correct order before? 0
+correct order after? 1
+
+Duration of function: 67111[µs]
+
+Dual Pivot  Array with 1000000  random elements with duplicates
+
+sum before: 7250825
+sum after: 7250825
+correct order before? 0
+correct order after? 1
+
+Duration of function: 82956[µs]
+
+ first elements of array with duplicates: 
+14, 4, 15, 4, 11, 4, 9, 4, 14, 4, 
+Single Pivot  Array with 10000000  random elements with duplicates
+
+sum before: 72507262
+sum after: 72507262
+correct order before? 0
+correct order after? 1
+
+Duration of function: 741172[µs]
+
+Dual Pivot  Array with 10000000  random elements with duplicates
+
+sum before: 72486977
+sum after: 72486977
+correct order before? 0
+correct order after? 1
+
+Duration of function: 932813[µs]
+
+ first elements of array with duplicates: 
+12, 4, 14, 4, 8, 4, 13, 4, 2, 4, 
+Single Pivot  Array with 100000000  random elements with duplicates
+
+sum before: 724926353
+sum after: 724926353
+correct order before? 0
+correct order after? 1
+
+Duration of function: 8262885[µs]
+
+Dual Pivot  Array with 100000000  random elements with duplicates
+
+sum before: 724973034
+sum after: 724973034
+correct order before? 0
+correct order after? 1
+
+Duration of function: 10001107[µs]
+
+Dual pivot quicksort is a fair bit slower than single pivot for the dataset with many duplicates
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Time of functions (sorted array):
+
+ first elements of sorted array: 
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
+Single Pivot  Array with 100000  random elements with duplicates
+
+sum before: 704982704
+sum after: 704982704
+correct order before? 1
+correct order after? 1
+
+Duration of function: 2724[µs]
+
+Dual Pivot  Array with 100000  random elements with duplicates
+
+sum before: 704982704
+sum after: 704982704
+correct order before? 1
+correct order after? 1
+
+Duration of function: 3957[µs]
+
+ first elements of sorted array: 
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
+Single Pivot  Array with 1000000  random elements with duplicates
+
+sum before: 1783293664
+sum after: 1783293664
+correct order before? 1
+correct order after? 1
+
+Duration of function: 26797[µs]
+
+Dual Pivot  Array with 1000000  random elements with duplicates
+
+sum before: 1783293664
+sum after: 1783293664
+correct order before? 1
+correct order after? 1
+
+Duration of function: 45033[µs]
+
+ first elements of sorted array: 
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
+Single Pivot  Array with 10000000  random elements with duplicates
+
+sum before: -2014260032
+sum after: -2014260032
+correct order before? 1
+correct order after? 1
+
+Duration of function: 330402[µs]
+
+Dual Pivot  Array with 10000000  random elements with duplicates
+
+sum before: -2014260032
+sum after: -2014260032
+correct order before? 1
+correct order after? 1
+
+Duration of function: 515618[µs]
+
+ first elements of sorted array: 
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
+Single Pivot  Array with 100000000  random elements with duplicates
+
+sum before: 887459712
+sum after: 887459712
+correct order before? 1
+correct order after? 1
+
+Duration of function: 3650136[µs]
+
+Dual Pivot  Array with 100000000  random elements with duplicates
+
+sum before: 887459712
+sum after: 887459712
+correct order before? 1
+correct order after? 1
+
+Duration of function: 5946459[µs]
+
+Dual pivot is conciderably slower than single pivot
