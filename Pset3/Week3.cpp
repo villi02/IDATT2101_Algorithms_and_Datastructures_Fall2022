@@ -67,6 +67,8 @@ void quicksort1(int *t, int v, int h)
 
 int partition(int *arr, int low, int high, int *lp)
 {
+    swap(&arr[low], &arr[(low + (high - low) / 3)]);
+    swap(&arr[high], &arr[(high - (high - low) / 3)]);
     if (arr[low] > arr[high])
         swap(&arr[low], &arr[high]);
 
@@ -166,6 +168,39 @@ int main(void)
     {
         std::cout << testArray2[i] << ", ";
     }
+
+    // Test loops
+    int sizes[] = {pow(10, 5), pow(10, 6), pow(10, 7), pow(10, 8)};
+
+    // Get starting timepoint
+    std::chrono::steady_clock::time_point begin221 = std::chrono::steady_clock::now();
+
+    quicksort1(, sizes[i]);
+
+    // Get ending timepoint
+    std::chrono::steady_clock::time_point end221 = std::chrono::steady_clock::now();
+    long duration221 = std::chrono::duration_cast<std::chrono::microseconds>(end221 - begin221).count();
+
+    std::cout << "\n Single Pivot "
+              << " Array with "
+              << powers[i] << "  random elements"
+              << "\nDuration of function: " << duration221 << "[µs]"
+              << std::endl;
+
+    // Get starting timepoint
+    std::chrono::steady_clock::time_point begin233 = std::chrono::steady_clock::now();
+
+    calc_pow2(base_normal, powers[i]);
+
+    // Get ending timepoint
+    std::chrono::steady_clock::time_point end233 = std::chrono::steady_clock::now();
+    long duration233 = std::chrono::duration_cast<std::chrono::microseconds>(end233 - begin233).count();
+
+    std::cout << "\n Dual Pivot "
+              << " Array with "
+              << powers[i] << "  random elements"
+              << "\nDuration of function: " << duration221 << "[µs]"
+              << std::endl;
 
     return 0;
 }
