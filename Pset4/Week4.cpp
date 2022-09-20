@@ -45,7 +45,7 @@ void printh(node *head)
     while (curr != NULL)
     {
         string value = curr->data;
-        cout << value << "->";
+        cout << value;
         curr = curr->next;
     }
 }
@@ -96,17 +96,13 @@ Dlist *string_to_DLL(string text, Dlist *dlist)
     }
 
     Dlist doneList;
-    std::cout << "\ntest in string_DDL:";
-    printh(head);
-    std::cout << "\ntest in string_DDL:";
-    printt(curr);
     doneList = (Dlist){.head = head, .tail = curr};
 
     dlist = &doneList;
     return dlist;
 }
 
-node *subtractionHelper(node *lNode, node *sNode, bool borrow)
+node *subtractionHelper(node *lNode, node *sNode, bool &borrow)
 {
     if (lNode == NULL && sNode == NULL && borrow == 0)
         return NULL;
@@ -139,10 +135,8 @@ node *subtractionHelper(node *lNode, node *sNode, bool borrow)
     return curr;
 }
 
-Dlist *subtraction(node *tail1, node *head1, node *tail2, node *head2, Dlist *dlist)
+node *subtraction(node *tail1, node *head1, node *tail2, node *head2, Dlist *dlist)
 {
-    node *curr1 = tail1;
-    node *curr2 = tail2;
     node *tempHead1 = head1;
     node *tempHead2 = head2;
     node *sNode = NULL, *lNode = NULL;
@@ -163,7 +157,7 @@ Dlist *subtraction(node *tail1, node *head1, node *tail2, node *head2, Dlist *dl
             if (head1->data != head2->data)
             {
                 lNode = stoi(head1->data) > stoi(head2->data) ? tempHead1 : tempHead2;
-                sNode = stoi(head1->data) > stoi(head2->data) ? tempHead2 : tempHead2;
+                sNode = stoi(head1->data) > stoi(head2->data) ? tempHead2 : tempHead1;
                 break;
             }
             head1 = head1->next;
@@ -175,22 +169,14 @@ Dlist *subtraction(node *tail1, node *head1, node *tail2, node *head2, Dlist *dl
         }
     }
     bool borrow = false;
-    node *doneSHeader = subtractionHelper(lNode, sNode, borrow);
-
-    while (doneSHeader != NULL)
+    if (lNode != tempHead1)
     {
-        
+        node *head = add('-');
+        head->next = subtractionHelper(lNode, sNode, borrow);
+        return head;
     }
-
-    Dlist doneList;
-    doneList = (Dlist){.head = head, .tail = curr};
-
-    dlist = &doneList;
-    return dlist;
-
-    return ;
+    return subtractionHelper(lNode, sNode, borrow);
 }
-
 // Function to add two numbers represented as linked list together
 Dlist *addition(node *tail1, node *tail2, Dlist *dlist)
 {
@@ -250,20 +236,13 @@ int main()
 {
 
     string number2, number1, operation;
-
-    /*
     // Get user input
     std::cout << "Number1: ";
     std::cin >> number1;
     std::cout << "Number2: ";
     std::cin >> number2;
-
-        std::cout << "Operation(+ or -): ";
-        std::cin >> operation;
-    */
-
-    number1 = "1000000000199999999991";
-    number2 = "1";
+    // number1 = "18";
+    // number2 = "20";
 
     node *head1 = NULL;
     node *tail1 = NULL;
@@ -293,7 +272,6 @@ int main()
     std::cout << "\nShould  be correct: ";
     printt(tail22);
 
-    std::cout << "\nSize of number1: " << getLength(head1);
     cout << "\nAfter subtraction: ";
     Dlist *dlistSub = NULL;
     printh(subtraction(tail1, head1, tail2, head2, dlistSub));
