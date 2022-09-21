@@ -260,6 +260,8 @@ Dlist *addition(node *tail1, node *tail2, Dlist *dlist)
 // Driver code
 int main()
 {
+    //string testNumber = "1000000000199999999991";
+
     // Works with maximum 22 numbers
     string number2, number1, operation;
     // Get user input

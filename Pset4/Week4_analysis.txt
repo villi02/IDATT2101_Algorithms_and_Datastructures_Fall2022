@@ -7,6 +7,13 @@ Task 1 comments:
 - The code does not accept a number with more than 23 digits, but the criteria was for minimum 20, so it is still a valid solution
 - must give a number and no letter as input
 
+Example I/O:
+Number1: 1000000000199999999991
+Number2: 1000000000199999999990
+
+Number 1 added to Number 2 (+): 2000000000399999999981
+Number 1 subtracted by number 2 (-): 0000000000000000000001
+
 
 Task 2 comments:
 - adding the words through the command line proved to be a bit of a hassle, to I added the same test data as was in the example.
@@ -14,3 +21,46 @@ Task 2 comments:
 -   - or use the infinite loop that will dynamically add the next word to the tree
 - should only input text
 - The program will only display the first 4 levels
+
+Example I/O:
+First word: hode
+New word: bein
+////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                 hode                                                 
+                        bein                                                                          
+                                                                                                
+                                                                                                
+                                                                                                
+New word: hals
+////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                 hode                                                 
+                        bein                                                                          
+           hals                                                                                   
+                                                                                                
+                                                                                                
+New word: arm
+////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                 hode                                                 
+                        bein                                                                          
+            arm                       hals                                                           
+                                                                                                
+                                                                                                
+New word: tann
+////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                 hode                                                 
+                        bein                                                tann                        
+            arm                       hals                                                           
+                                                                                                
+                                                                                                
+New word: hånd
+////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                 hode                                                 
+                        bein                                                tann                        
+            arm                       hals                      hånd                                   
+                                                                                                
+                                                                                                
+New word: tå
+////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                 hode                                                 
+                        bein                                                tann                        
+            arm                       hals                      hånd                       tå            
