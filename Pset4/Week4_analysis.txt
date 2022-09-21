@@ -1,0 +1,11 @@
+The two tasks are finished as described.
+
+
+
+Task 1 comments:
+- The code does not accept a number with more than 23 digits
+
+
+Task 2 comments:
+- adding the words through the command line proved to be a bit of a hassle, to I added the same test data as was in the example.
+-   - If you wish to test further then I suggest you add/remove any elements as per the test data so that the program works smoothly
