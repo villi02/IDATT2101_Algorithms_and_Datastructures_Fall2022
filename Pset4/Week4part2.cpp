@@ -203,6 +203,7 @@ int main(int argc, char **argv)
         string word;
         std::cout << "New word: ";
         std::cin >> word;
+        cout << "////////////////////////////////////////////////////////////////////////////////////////////////////\n";
         insertion(root, word);
         printTree(root);
     }
