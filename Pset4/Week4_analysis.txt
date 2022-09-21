@@ -3,7 +3,7 @@ The two tasks are finished as described.
 
 
 Task 1 comments:
-- The code does not accept a number with more than 23 digits
+- The code does not accept a number with more than 23 digits, but the criteria was for minimum 20, so it is still a valid solution
 
 
 Task 2 comments:
