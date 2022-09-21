@@ -1,12 +1,15 @@
 The two tasks are finished as described.
 
-
+Both programs work by running them without command line arguments.
+Both programs start with a promt asking for user input, and will do everything automatically as long as given the correct input format
 
 Task 1 comments:
 - The code does not accept a number with more than 23 digits, but the criteria was for minimum 20, so it is still a valid solution
+- must give a number and no letter as input
 
 
 Task 2 comments:
 - adding the words through the command line proved to be a bit of a hassle, to I added the same test data as was in the example.
 -   - If you wish to test further then I suggest you add/remove any elements as per the test data so that the program works smoothly
 -   - or use the infinite loop that will dynamically add the next word to the tree
+- should only input text
