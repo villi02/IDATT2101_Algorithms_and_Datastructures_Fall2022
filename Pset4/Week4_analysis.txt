@@ -13,3 +13,4 @@ Task 2 comments:
 -   - If you wish to test further then I suggest you add/remove any elements as per the test data so that the program works smoothly
 -   - or use the infinite loop that will dynamically add the next word to the tree
 - should only input text
+- The program will only display the first 4 levels
