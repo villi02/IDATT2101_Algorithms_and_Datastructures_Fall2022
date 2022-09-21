@@ -135,7 +135,7 @@ node *subtractionHelper(node *lNode, node *sNode, bool &borrow)
     return curr;
 }
 
-node *subtraction(node *tail1, node *head1, node *tail2, node *head2, Dlist *dlist)
+Dlist *subtraction(node *tail1, node *head1, node *tail2, node *head2, Dlist *dlist)
 {
     node *tempHead1 = head1;
     node *tempHead2 = head2;
@@ -165,7 +165,10 @@ node *subtraction(node *tail1, node *head1, node *tail2, node *head2, Dlist *dli
         }
         if (lNode == NULL && sNode == NULL)
         {
-            return add('0');
+            Dlist doneList;
+            doneList = (Dlist){.head = add('0'), .tail = add('0')};
+            dlist = &doneList;
+            return dlist;
         }
     }
     bool borrow = false;
@@ -173,10 +176,33 @@ node *subtraction(node *tail1, node *head1, node *tail2, node *head2, Dlist *dli
     {
         node *head = add('-');
         head->next = subtractionHelper(lNode, sNode, borrow);
-        return head;
+        node *traversalHead = head;
+        while (traversalHead->next)
+        {
+            traversalHead->next->prev = traversalHead;
+            traversalHead = traversalHead->next;
+        }
+        Dlist doneList;
+        doneList = (Dlist){.head = head, .tail = traversalHead};
+        dlist = &doneList;
+        return dlist;
     }
-    return subtractionHelper(lNode, sNode, borrow);
+    node *headNode = subtractionHelper(lNode, sNode, borrow);
+    node *traversalHead = headNode;
+
+    while (traversalHead->next)
+    {
+        traversalHead->next->prev = traversalHead;
+        traversalHead = traversalHead->next;
+    }
+
+    Dlist doneList;
+    doneList = (Dlist){.head = headNode, .tail = traversalHead};
+
+    dlist = &doneList;
+    return dlist;
 }
+
 // Function to add two numbers represented as linked list together
 Dlist *addition(node *tail1, node *tail2, Dlist *dlist)
 {
@@ -266,9 +292,15 @@ int main()
     std::cout << "\nNumber 1 added to Number 2 (+): ";
     printt(tail22);
 
-    cout << "\nNumber 1 subtracted by number 2 (-): ";
     Dlist *dlistSub = NULL;
-    printh(subtraction(tail1, head1, tail2, head2, dlistSub));
+    node *subtail = NULL;
+    node *subhead = NULL;
+    dlistSub = subtraction(tail1, head1, tail2, head2, dlistSub);
+    subtail = dlistSub->tail;
+    head22 = dlistSub->head;
+
+    cout << "\nNumber 1 subtracted by number 2 (-): ";
+    printh(head22);
 
     return 0;
 }
