@@ -170,9 +170,9 @@ void printTree(node *root)
 int main(int argc, char **argv)
 {
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    // virker ikke med dette, selv om det burde gå, du må legge til ønsket elementer som lengre nede//
-    //////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // virker ikke med dette, selv om det burde gå, du må legge til ønsket elementer som lengre nede, eller bruke uendelige funksjonen lengst nede//
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*
     node *root = NULL;
     root = add(argv[0]);
@@ -182,16 +182,30 @@ int main(int argc, char **argv)
     }
     */
 
-    // hode bein hals arm tann hånd tå
-    node *root = add("hode");
-    insertion(root, "bein");
-    insertion(root, "hals");
-    insertion(root, "arm");
-    insertion(root, "tann");
-    insertion(root, "hånd");
-    insertion(root, "tå");
+    /*
+        // hode bein hals arm tann hånd tå
+        node *root = add("hode");
+        insertion(root, "bein");
+        insertion(root, "hals");
+        insertion(root, "arm");
+        insertion(root, "tann");
+        insertion(root, "hånd");
+        insertion(root, "tå");
+    */
 
-    printTree(root);
+    string first_word;
+    std::cout << "First word: ";
+    std::cin >> first_word;
+
+    node *root = add(first_word);
+    while (true)
+    {
+        string word;
+        std::cout << "New word: ";
+        std::cin >> word;
+        insertion(root, word);
+        printTree(root);
+    }
 
     return 0;
 }
