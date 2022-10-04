@@ -50,7 +50,7 @@ int HashTable::getHash(string input, int size)
     int hash = 0;
     for (int i = 0; i < input.size(); i++)
     {
-        hash += int(input[i]) * (i + 1);
+        hash += abs(int(input[i]) * (i + 1));
     }
 
     return hash % size;
