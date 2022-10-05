@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <math.h>
 #include <vector>
+#include <map>
 using namespace std;
 
 class HashTable
@@ -51,8 +52,6 @@ void HashTable::addToTable(int data)
 {
 
     int positionHash = getHash1(data, primeNumberForTable);
-    // cout << "\ndata: " << data;
-    // cout << " hash: " << positionHash;
 
     if (numbers[positionHash] == 0)
     {
@@ -81,20 +80,45 @@ int main()
 {
     int sizeOfTable = 12334093;
     int *numbers = new int[sizeOfTable];
+    multimap<int, int> gquiz1;
     HashTable *table = new HashTable(sizeOfTable);
-    cout << pow(10, 7) / (double)12334093;
     int *newArray = fillArray(numbers, pow(10, 7));
     cout << "\nDone with random numbers";
 
     // newVector->insert(newVector->begin() + 69, 420);
     // cout << "\nTest number: " << newVector->at(69);
 
+    // Get starting timepoint
+    chrono::steady_clock::time_point begin1 = std::chrono::steady_clock::now();
+
     for (int i = 0; i < int(pow(10, 7)); i++)
     {
         table->addToTable(newArray[i]);
     }
 
+    // Get ending timepoint
+    chrono::steady_clock::time_point end1 = std::chrono::steady_clock::now();
+    long duration1 = std::chrono::duration_cast<std::chrono::microseconds>(end1 - begin1).count();
+
+    cout << "\nDuration of custom hashtable: " << duration1 << "[µs]";
+
+    // Get starting timepoint
+    chrono::steady_clock::time_point begin2 = std::chrono::steady_clock::now();
+
+    for (int i = 0; i < int(pow(10, 7)); i++)
+    {
+        gquiz1.insert(pair<int, int>(i, newArray[i]));
+    }
+
+    // Get ending timepoint
+    chrono::steady_clock::time_point end2 = std::chrono::steady_clock::now();
+    long duration2 = std::chrono::duration_cast<std::chrono::microseconds>(end2 - begin2).count();
+    cout << "\nDuration of C++ built-inn multimap: " << duration2 << "[µs]";
+
     cout << "\nDone with hashingtable!";
+    cout << "\nCollisions: " << table->collisions;
+    cout << "\nLastfaktor: " << pow(10, 7) / sizeOfTable;
+    cout << "\nNB! I could not find a standard hashmap built in with C++, instead i only found a multi map as the best equivalent, didn't really have traditional put or add method, and i had to create the index myself, so the multimap is not exactly the same as a hashmap, but the closest i could find";
 
     return 0;
 }
