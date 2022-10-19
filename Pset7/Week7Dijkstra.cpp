@@ -12,7 +12,6 @@ typedef struct node_st
 {
     int number;
     struct edge_st *start_edge;
-    bool visited;
     void *d;
 } node;
 
@@ -22,6 +21,7 @@ typedef struct edge_st
 {
     struct edge_st *next_edge;
     struct node_st *to_node;
+    int weight;
 } edge;
 
 // Used code from the text book "algoritmer og datastrukturer" by Haftig, Ljosland
@@ -45,17 +45,42 @@ Graph *getNewGraph(FILE *f)
     for (int i = 0; i < G->amount_nodes; i++)
     {
         G->nodes[i].number = i;
-        G->nodes[i].visited = false;
     }
     for (int i = 0; i < G->amount_edges; i++)
     {
-        int from, to;
+        int from, to, weight;
         edge *e = (edge *)malloc(sizeof(edge));
-        fscanf(f, "%i %i\n", &from, &to);
+        fscanf(f, "%i %i %i\n", &from, &to, &e->weight);
         e->to_node = &G->nodes[to];
         e->to_node->number = to;
         e->next_edge = G->nodes[from].start_edge;
         G->nodes[from].start_edge = e;
     }
     return G;
+}
+
+int main(int argc, char const *argv[])
+{
+
+    FILE *openfile1 = fopen("vg1.txt", "r");
+    FILE *openfile2 = fopen("vg2.txt", "r");
+    FILE *openfile3 = fopen("vg3.txt", "r");
+    FILE *openfile4 = fopen("vg4.txt", "r");
+    FILE *openfile5 = fopen("vg5.txt", "r");
+    FILE *openfileSkandi = fopen("vgSkandinavia.txt", "r");
+
+    Graph *g = getNewGraph(openfile1);
+
+    for (int i = 0; i < g->amount_nodes; i++)
+    {
+        edge *nextEdge = g->nodes[i].start_edge;
+        while (nextEdge != NULL)
+        {
+            cout << "\nFrom " << i << " to " << nextEdge->to_node->number << " weight " << nextEdge->weight;
+            nextEdge = nextEdge->next_edge;
+        }
+    }
+
+
+    return 0;
 }
