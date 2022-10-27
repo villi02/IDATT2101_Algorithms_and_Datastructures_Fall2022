@@ -47,7 +47,7 @@ public:
     {
         this->amount_nodes = node_amount;
         this->amount_edges = edge_amount;
-        adj_nodes = new vector<pii>[node_amount];
+        adj_nodes = (vector<pii>*) malloc(node_amount * sizeof(vector<pii>));
     }
 
     void addEdge(int from, int to, int weight);
@@ -108,12 +108,14 @@ void addAllEdges(Graph g, FILE *f, int edge_amount)
 void Graph::dijkstras(int start_node)
 {
     int i, u, to, weight, size_edge, nodes, edges, starting;
-    priority_queue<pii, vector<pii>, greater<pii> > pq;
-    bool *F = new bool[amount_nodes];
-    int *dist = new int[amount_nodes];
-    int *prev_node = new int[amount_nodes];
+    //priority_queue<pii, vector<pii>, greater<pii> > pq;
+    priority_queue<pii, vector<pii>, greater<pii> >* pq = (priority_queue<pii, vector<pii>, greater<pii> >*)malloc(amount_edges*sizeof(priority_queue<pii, vector<pii>, greater<pii> >));
 
-    pq.push(make_pair(start_node, 0));
+    bool *F = (bool*)malloc(amount_nodes * sizeof(bool));;
+    int *dist = (int*)malloc(amount_nodes * sizeof(int));
+    int *prev_node = (int*)malloc(amount_nodes * sizeof(int));;
+
+    pq->push(make_pair(start_node, 0));
 
     for (int i = 0; i < amount_nodes; i++)
     {
@@ -122,10 +124,10 @@ void Graph::dijkstras(int start_node)
 
     dist[start_node] = 0;
 
-    while (!pq.empty())
+    while (!pq->empty())
     {
-        int u = pq.top().first;
-        pq.pop();
+        int u = pq->top().first;
+        pq->pop();
         if (F[u])
         {
             continue;
@@ -139,7 +141,7 @@ void Graph::dijkstras(int start_node)
             {
                 dist[to] = dist[u] + weight;
                 prev_node[to] = u;
-                pq.push(pii(to, D[to]));
+                pq->push(pii(to, D[to]));
             }
         }
         F[u] = 1;
@@ -203,6 +205,7 @@ int main(int argc, char const *argv[])
     g5.dijkstras(1);
 
 
+    cout << "\n Skandinavia har problemer, da pair i seg selv ikke virker til å klare å håndtere størrelsen." << endl;
 
 
     int fileNr, start_point;
@@ -247,7 +250,7 @@ int main(int argc, char const *argv[])
     {
         case 1:
 
-            addAllEdges(g11, openfile1, edge_amount11);
+            addAllEdges(g11, openfile11, edge_amount11);
 
             cout << "\nvg1 utskrift" << endl;
             g11.dijkstras(start_point);
