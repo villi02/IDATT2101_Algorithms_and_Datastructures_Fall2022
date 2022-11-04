@@ -71,7 +71,7 @@ public:
     void decimalToBinary();
 
     // binaryToDecimal converts a binary number to decimal
-    void binaryToDecimal();
+    int binaryToDecimal(char *str);
 
     // createCodes creates the codes (as a string) based on the huffman tree
     void createCodes(Node *root, string str);
@@ -80,10 +80,20 @@ public:
     void readUncompressedBytes();
 
     // Compressing input file
-    void compress();
+    void compressFile();
     // Decrompressing input file
-    void decompress();
+    void decompressFile();
 };
+
+int Huffman::binaryToDecimal(char *str)
+{
+    int val = 0;
+
+    while (*str != '\0')
+        val = 2 * val + (*str++ - '0');
+
+    return val;
+}
 
 void Huffman::readUncompressedBytes()
 {
@@ -152,6 +162,60 @@ void Huffman::createCodes(Node *node, string str)
 
     createCodes(node->left, str + '0');
     createCodes(node->right, str + '1');
+}
+
+void Huffman::compressFile()
+{
+    // initialize components
+    inFile.open(inFileName, ios::in);
+    string binaryString = "";
+    char asci;
+    string inputString = "";
+
+    // Metadata is structured like: size_of_heap->(for each char in heap) char -> frequency
+    inputString += (char)heap.size();
+    priority_queue<Node *, vector<Node *>, comp> tempQueue(heap);
+    Node *topNode;
+
+    while (tempQueue.size() > 0)
+    {
+        topNode = tempQueue.top();
+        tempQueue.pop();
+        inputString += (char)topNode->data;
+        inputString += (char)topNode->freq;
+        cout << topNode->data << " " << topNode->freq << endl;
+    }
+
+    // Iterate through each character in inputfile to translate to make binary string
+    inFile.get(asci);
+    while (!inFile.eof())
+    {
+        binaryString += asciiVal[asci]->code;
+        // Can't write on a bit by bit basis, thus need to fill a byte and write the value of that directly
+        while (binaryString.length() > 8)
+        {
+            //inputString += (char)binaryToDecimal((char*)binaryString.substr(0, 8));
+            binaryString = binaryString.substr(8);
+        }
+
+        inFile.get(asci);
+    }
+
+    // the huffman endoded bytes will not always be a multiple of 8, thus we need to deal with the leftover bytes, and keep track as to not include them in the decompression
+    int bitsLeft = 8 - binaryString.length();
+    if (bitsLeft > 0)
+    {
+        for (int i = 0; i < bitsLeft; i++)
+        {
+            binaryString += '0';
+        }
+        //inputString += (char)binaryToDecimal(binaryString.substr(0, 8));
+        // The last byte of the decompressed file will be the amount of padded zeros to ignore, so read the bits until the bitsleft-th bit
+        inputString += (char)bitsLeft;
+    }
+
+    // outfile.write)
+    // inFile.close();
 }
 
 // code to read bytes from file is gotten from here: https://stackoverflow.com/questions/36658734/c-get-all-bytes-of-a-file-in-to-a-char-array
@@ -243,4 +307,5 @@ int main()
 
     h.createHuffTree();
     h.createCodes(h.root, "");
+    h.compressFile();
 }
