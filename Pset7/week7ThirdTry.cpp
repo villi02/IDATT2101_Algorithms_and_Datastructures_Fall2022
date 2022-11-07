@@ -35,19 +35,11 @@ class Graph
     int amount_edges;
 
 public:
-    /*
-        Graph(int node_amount, int amount_edges)
-        {
-            this->amount_nodes = node_amount;
-            this->amount_edges = amount_edges;
-            this->adj_nodes = new vector<pii>[node_amount];
-        }
-        */
     Graph(int node_amount, int edge_amount)
     {
         this->amount_nodes = node_amount;
         this->amount_edges = edge_amount;
-        adj_nodes = (vector<pii>*) malloc(node_amount * sizeof(vector<pii>));
+        adj_nodes = (vector<pii> *)malloc(node_amount * sizeof(vector<pii>));
     }
 
     void addEdge(int from, int to, int weight);
@@ -108,12 +100,13 @@ void addAllEdges(Graph g, FILE *f, int edge_amount)
 void Graph::dijkstras(int start_node)
 {
     int i, u, to, weight, size_edge, nodes, edges, starting;
-    //priority_queue<pii, vector<pii>, greater<pii> > pq;
-    priority_queue<pii, vector<pii>, greater<pii> >* pq = (priority_queue<pii, vector<pii>, greater<pii> >*)malloc(amount_edges*sizeof(priority_queue<pii, vector<pii>, greater<pii> >));
+    // priority_queue<pii, vector<pii>, greater<pii> > pq;
+    priority_queue<pii, vector<pii>, greater<pii> > *pq = (priority_queue<pii, vector<pii>, greater<pii> > *)malloc(amount_edges * sizeof(priority_queue<pii, vector<pii>, greater<pii> >));
 
-    bool *F = (bool*)malloc(amount_nodes * sizeof(bool));;
-    int *dist = (int*)malloc(amount_nodes * sizeof(int));
-    int *prev_node = (int*)malloc(amount_nodes * sizeof(int));;
+    bool *F = (bool *)malloc(amount_nodes * sizeof(bool));
+    int *dist = (int *)malloc(amount_nodes * sizeof(int));
+    int *prev_node = (int *)malloc(amount_nodes * sizeof(int));
+    ;
 
     pq->push(make_pair(start_node, 0));
 
@@ -128,20 +121,18 @@ void Graph::dijkstras(int start_node)
     {
         int u = pq->top().first;
         pq->pop();
-        if (F[u])
-        {
-            continue;
-        }
         size_edge = adj_nodes[u].size();
         for (int i = 0; i < size_edge; i++)
         {
             to = adj_nodes[u].at(i).first;
             weight = adj_nodes[u].at(i).second;
-            if (!F[u] && (dist[u] + weight) < dist[to])
+            if ((dist[u] + weight) < dist[to])
             {
+                int toNode = to;
+                int newDistance = dist[u] + weight;
                 dist[to] = dist[u] + weight;
                 prev_node[to] = u;
-                pq->push(pii(to, D[to]));
+                pq->push(pii(to, dist[to]));
             }
         }
         F[u] = 1;
@@ -180,7 +171,7 @@ int main(int argc, char const *argv[])
     */
 
     cout << "\nOm distanse = 2147483647, så betyr det at den ikke blir nådd" << endl;
-
+    
     // vg1
     int node_amount1, edge_amount1;
     fscanf(openfile1, "%i %i\n", &node_amount1, &edge_amount1);
@@ -204,9 +195,7 @@ int main(int argc, char const *argv[])
     cout << "\nvg5 utskrift" << endl;
     g5.dijkstras(1);
 
-
     cout << "\n Skandinavia har problemer, da pair i seg selv ikke virker til å klare å håndtere størrelsen." << endl;
-
 
     int fileNr, start_point;
     // Get user input
@@ -223,7 +212,6 @@ int main(int argc, char const *argv[])
     int node_amount66, edge_amount66;
 
     // Initialze all things
-
 
     FILE *openfile11 = fopen("vg1.txt", "r");
     fscanf(openfile11, "%i %i\n", &node_amount11, &edge_amount11);
@@ -245,61 +233,59 @@ int main(int argc, char const *argv[])
     fscanf(openfileSkandi, "%i %i\n", &node_amount66, &edge_amount66);
     Graph g6(node_amount66, edge_amount66);
 
-
     switch (fileNr)
     {
-        case 1:
+    case 1:
 
-            addAllEdges(g11, openfile11, edge_amount11);
+        addAllEdges(g11, openfile11, edge_amount11);
 
-            cout << "\nvg1 utskrift" << endl;
-            g11.dijkstras(start_point);
-            break;
+        cout << "\nvg1 utskrift" << endl;
+        g11.dijkstras(start_point);
+        break;
 
-        case 2:
+    case 2:
 
-            addAllEdges(g2, openfile2, edge_amount22);
+        addAllEdges(g2, openfile2, edge_amount22);
 
-            cout << "\nvg2 utskrift" << endl;
-            g2.dijkstras(start_point);
-            break;
+        cout << "\nvg2 utskrift" << endl;
+        g2.dijkstras(start_point);
+        break;
 
-        case 3:
+    case 3:
 
-            addAllEdges(g3, openfile3, edge_amount33);
+        addAllEdges(g3, openfile3, edge_amount33);
 
-            cout << "\nvg3 utskrift" << endl;
-            g3.dijkstras(start_point);
-            break;
+        cout << "\nvg3 utskrift" << endl;
+        g3.dijkstras(start_point);
+        break;
 
-        case 4:
+    case 4:
 
-            addAllEdges(g4, openfile4, edge_amount44);
+        addAllEdges(g4, openfile4, edge_amount44);
 
-            cout << "\nvg4 utskrift" << endl;
-            g4.dijkstras(start_point);
-            break;
+        cout << "\nvg4 utskrift" << endl;
+        g4.dijkstras(start_point);
+        break;
 
-        case 5:
+    case 5:
 
-            addAllEdges(g55, openfile55, edge_amount55);
+        addAllEdges(g55, openfile55, edge_amount55);
 
-            cout << "\nvg5 utskrift" << endl;
-            g55.dijkstras(start_point);
-            break;
+        cout << "\nvg5 utskrift" << endl;
+        g55.dijkstras(start_point);
+        break;
 
-        case 6:
+    case 6:
 
-            addAllEdges(g6, openfileSkandi, edge_amount66);
+        addAllEdges(g6, openfileSkandi, edge_amount66);
 
-            cout << "\nvgskandi utskrift" << endl;
-            g6.dijkstras(start_point);
-            break;
+        cout << "\nvgskandi utskrift" << endl;
+        g6.dijkstras(start_point);
+        break;
 
-        default:
-            cout << "\nNoe gikk gale her, kanskje du gav inn feil input" << endl;
-            break;
-
+    default:
+        cout << "\nNoe gikk gale her, kanskje du gav inn feil input" << endl;
+        break;
     }
     return 0;
 }
